@@ -9,11 +9,15 @@ import java.util.logging.Logger;
  * @author Giovani Castilho
  * @author Otavio Villela
  */
+ 
 public class ProjetoES {
+
+    public static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
-        TicketMachine tm = new TicketMachine(0);
+        TicketMachine tm = null; //Instância nula para facilitar testes e utilização
+        Utilizar(tm); // Método para utilização da classe TicketMachine
         
-        // TESTES
+        // --- TESTES --- //
         tm.valor = 20;
         tm.saldo = 1000;
         int notaDeDois = tm.papelMoeda[0];
@@ -28,7 +32,20 @@ public class ProjetoES {
         } catch (PapelMoedaInvalidaException ex) {
             ex.getMessage();
         }
-        
-        
+        // --- FIM DOS TESTES --- //
     } 
+    
+    public static void Utilizar(TicketMachine tm){
+        System.out.println("Digite a quantia a ser inserida: ");
+            int quantia = Integer.parseInt(sc.nextLine());
+        tm = new TicketMachine(quantia);
+        
+        try {
+           tm.inserir(quantia);
+           tm.getTroco();
+        } catch (PapelMoedaInvalidaException | SaldoInsuficienteException ex){
+           ex.getMessage();
+        }
+        tm.imprimir();
+    }
 }
